@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: ggt
+Version: 0.1.0
+Summary: Galaxy Morphology Posterior Estimation Network
+Author: Amrit Rau, Aritra Ghosh
+License: GNU GPL v3
+License-File: LICENSE
