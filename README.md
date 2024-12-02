@@ -14,7 +14,6 @@ PSFGAN-GaMPEN
         └── Applying trained GaMPEN models
             ├── Inference
             └── Result Aggregation
-        └── Notes on our trained PSFGAN and GaMPEN models
 ```
 ## Dependencies
 `Linux` or `OSX`
@@ -205,4 +204,4 @@ Corresponding folders and associated catalogs will be created.
 ### Applying trained GaMPEN models
 #### Inference
 #### Result Aggregation
-### Notes on our trained PSFGAN and GaMPEN models
+
