@@ -142,7 +142,7 @@ Certain parameters need to be properly set before we proceed:
 In `config.py`:
 - `redshift`:  `'{target dataset name}'` 
 - `filters_`:  `['g']`, `['r']`, `['i']`, `['z']` or `['y']` for the `low`, `mid`, `high`, `extra`, or `extreme` redshift bin, respectively.
-- `stretch_type` and `scale_factor`: `'asinh'` and `50` (**if you are using our trained models, please keep these values fixed as so**)
+- `stretch_type` and `scale_factor`: `'asinh'` and `50` (**please keep these values fixed as so**)
 
 Also, after the following block:
 ```bash
