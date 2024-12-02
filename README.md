@@ -92,7 +92,7 @@ Essentially, the first step we want to do is to put all raw images in a single f
 In `data_split_agn.py`, set the following parameters to the correct values before proceed:
 - `core_path`: full path of the `PSFGAN/` folder
 - `galaxy_main`: `core_path` + `'{target dataset name}/'` (users have the freedom to name this folder --- once it is chosen it should be fixed)
-- `filter_strings`: `['g']` (if you are using our trained models not from the low redshift bin, change this appropriately --- `['r']`, `['i']`, `['z']` or `['y']` --- see the previous section)
+- `filter_strings`:  `['g']`, `['r']`, `['i']`, `['z']` or `['y']` when you are using our trained models in the `low`, `mid`, `high`, `extra`, or `extreme` redshift bin, respectively --- see the previous section
 - `desired_shape`: `[185, 185]` (desired shape of output images in pixels --- **it has to be `[185, 185]` when using our trained models**)
 - `--test`: set its default value to the number of galaxies your target dataset has
 - `--shuffle`: `1` (`1` to shuffle images before splitting, `0` otherwise)
