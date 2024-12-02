@@ -35,10 +35,10 @@ This guide will allow readers to apply our trained models of `PSFGAN-GaMPEN` on 
 
 As illustrated in the paper, in each of the five redshift bins, we trained an individual model of `PSFGAN` and an individual model of `GaMorNet`:
 ```bash
-Low redshift bin (0<z<0.25)
+Low redshift bin (0 < z < 0.25)
     └── PSFGAN for g-band
         └── GaMPEN for g-band
-Mid redshift bin (0.25<z<0.5)
+Mid redshift bin (0.25 < z < 0.5)
     └── PSFGAN for r-band
         └── GaMPEN for r-band
 High redshift bin (0.5<z<0.9)
