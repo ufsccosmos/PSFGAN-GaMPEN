@@ -27,7 +27,7 @@ Python modules (including but not limited to): `NumPy`, `SciPy`, `Astropy`, `Pan
 ## Installation
 Clone this repository and change the present working directory to `PSFGAN-GaMPEN/`.
 
-Alternatively, you can download our data from this [Google Drive](https://drive.google.com/drive/folders/1cSxARao_UVPG9RlhYYjp-LvRQOWgA3DB?usp=sharing) (This inclues the source code for `PSFGAN-GaMPEN`, our trained models and scaling files (needed for GaMPEN inference and result aggregation). 
+Alternatively, you can download our data from this [Google Drive](https://drive.google.com/drive/folders/1cSxARao_UVPG9RlhYYjp-LvRQOWgA3DB?usp=sharing) (This inclues the source code for `PSFGAN-GaMPEN`, our trained models and scaling files (needed for GaMPEN inference and result aggregation)). 
 ## A brief guide to using our trained PSFGAN-GaMPEN models
 In this section, we will present a quick guide so readers can learn how to effectively use our trained `PSFGAN-GaMPEN` models in a minimal amount of time.
 ### Introduction
