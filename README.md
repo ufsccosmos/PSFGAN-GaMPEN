@@ -87,6 +87,17 @@ PSFGAN-GaMPEN/
 ```
 For the target dataset, its raw data images should be stored (in .fits format) in an `image` folder. There should also be a separate catalog file (in .csv format) that contains necessary information of each image. Other columns are optional and users can include as many as they want. Though it would be the user's responsibility to properly handle extra columns when generating new .csv files (see below).
 ### Data splitting
+Essentially, the first step we want to do is to put all raw images in a single folder called `fits_test`. This is just formality and no actual data split is done. We will use `data_split_agn.py` to do so.
+
+In `data_split_agn.py`, set the following parameters to the correct values before proceed:
+- `core_path`: full path of the `PSFGAN/` folder
+- `galaxy_main`: `core_path` + `'{target dataset name}/'` 
+- `filter_strings`: `['g']` (if you are using our trained models not from the low redshift bin, change this appropriately --- `['r']`, `['i']`, `['z']` or `['y']` --- see the previous section)
+- `desired_shape`: `[185, 185]` (desired shape of output images in pixels --- **it has to be `[185, 185]` when using our trained models**)
+- `--test`: set its default value to the number of galaxies your target dataset has
+- `--shuffle`: `1` (`1` to shuffle images before splitting, `0` otherwise)
+- `--source`: `'{target dataset name}'` (name of the target dataset --- this should be the same of the corresponding folder name)
+
 
 ### Real AGN image normalization
 ### Applying trained PSFGAN models
