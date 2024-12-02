@@ -41,13 +41,13 @@ Low redshift bin (0 < z < 0.25)
 Mid redshift bin (0.25 < z < 0.5)
     └── PSFGAN for r-band
         └── GaMPEN for r-band
-High redshift bin (0.5<z<0.9)
+High redshift bin (0.5 < z < 0.9)
     └── PSFGAN for i-band
         └── GaMPEN for i-band
-Extra redshift bin (0.9<z<1.1)
+Extra redshift bin (0.9 < z < 1.1)
     └── PSFGAN for z-band
         └── GaMPEN for z-band
-Extreme redshift bin (1.1<z<1.4)
+Extreme redshift bin (1.1 < z < 1.4)
     └── PSFGAN for y-band
         └── GaMPEN for y-band
 ```
