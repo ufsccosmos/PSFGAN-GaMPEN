@@ -184,7 +184,7 @@ You should also add appropriate codes at the ends of the following two blocks to
                                                               , ignore_index=True)
                 catalog_test_npy_inputs[f_index] = catalog_per_index
 ```
-The added blocks play a similar role as we just mentioned in the previous section.
+`roouhsc_agn.py` creates a new catalog from the old (`catalog_test.csv` under `{target dataset name}/{the corresponding filter}-band/`). The first block determines names of the columns in the new catalog while the second block determines how each column in the new catalog is related to columns from the old catalog.
 
 At last, change the following block appropriately to check negative fluxes. You may simply insert `or (source == "{target dataset name}")` within the `if` clause to stick with our conventions. If there is no flux column you may skip this part and leave this block unchanged.
 ```bash
