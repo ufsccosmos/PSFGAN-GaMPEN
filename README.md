@@ -136,6 +136,71 @@ At last, change the following block appropriately to process raw images. You may
 Once these parameters are properly set, ran `python PSFGAN-GaMPEN/PSFGAN/data_split_agn.py`.
 Corresponding folders and their associated catalogs will be created.
 ### Real AGN image normalization
+The next step is to normalize all images of real AGNs in the `fits_test` folder using the chosen stretch function (see below). 
+
+Certain parameters need to be properly set before we proceed:
+
+In `config.py`:
+- `redshift`:  `'{target dataset name}'` 
+- `filters_`:  `['g']`, `['r']`, `['i']`, `['z']` or `['y']` for the `low`, `mid`, `high`, `extra`, or `extreme` redshift bin, respectively.
+- `stretch_type` and `scale_factor`: `'asinh'` and `50` (**if you are using our trained models, please keep these values fixed as so**)
+
+Also, after the following block:
+```bash
+    if redshift == 'stemo_0.5_1.0':
+        pixel_max_value = 1000
+```
+One should add:
+```bash
+    if redshift == '{target dataset name}':
+        pixel_max_value = {pixel_max_value}
+```
+Here, `{pixel_max_value}` denotes the largest pixel value allowed (pre-normliazation) --- this should be `1500`, `500`, `2000`, `750` or `750` if you are using our trained `PSFGAN` models in the `low`, `mid`, `high`, `extra`, or `extreme` redshift bin, respectively. **This value is subject to the trained model you want to use and thus can not be adjusted.** 
+
+In `roouhsc_agn.py`:
+- `--source`:  `'{target dataset name}'` (name of the target dataset --- this should be the same of the corresponding folder name)
+- `--crop`: `0` (set this to be zero so images are not cropped during normalization)
+
+You should also add appropriate codes at the ends of the following two blocks to properly process catalogs:
+```bash
+    elif source == 'liu':
+        for filter_string in filters_string:
+            column_list=['object_id', 'ra', 'dec', 'specz_redshift', 'specz_flag_homogeneous',
+                         'z',
+                         'galaxy_total_flux_' + filter_string]
+            catalog_test_npy_input = pandas.DataFrame(columns=column_list)        
+            catalog_test_npy_inputs.append(catalog_test_npy_input)
+```
+```bash
+            elif source == 'liu':
+                catalog_per_index = catalog_test_npy_inputs[f_index]
+                catalog_per_index = catalog_per_index.append({'object_id': image_id,
+                                                              'ra': obj_line['ra'].item(),
+                                                              'dec': obj_line['dec'].item(),
+                                                              'specz_redshift': obj_line['specz_redshift'].item(),
+                                                              'specz_flag_homogeneous': obj_line['specz_flag_homogeneous'].item(),
+                                                              'z': obj_line['z'].item(),
+                                                              'galaxy_total_flux_' + filters_string[f_index]:
+                                                              obj_line[filters_string[f_index] + '_total_flux'].item()}
+                                                              , ignore_index=True)
+                catalog_test_npy_inputs[f_index] = catalog_per_index
+```
+The added blocks play a similar role as we just mentioned in the previous section.
+
+At last, change the following block appropriately to check negative fluxes. You may simply insert `or (source == "{target dataset name}")` within the `if` clause to stick with our conventions. If there is no flux column you may skip this part and leave this block unchanged.
+```bash
+            if (source == 'nair') or (source == 'gabor_0.3_0.5') or (source == 'gabor_0.5_0.75') or (source == 'povic_0_0.5') or (source == 'povic_0.5_0.75') or (source == 'stemo_0.2_0.5') or (source == 'stemo_0.5_1.0') or (source == 'liu'):
+                flux = obj_line[filters_string[f_index] + '_total_flux'].item()
+                if flux < 0:
+                    print(filters_string[f_index] + '_total_flux' + ' value in catalog is negative!')
+                    continue
+```
+
+Once all parameters are set, ran the following to normalize all images in the `fits_test` folder using the chosen stretch function:
+```bash
+python PSFGAN-GaMPEN/PSFGAN/roouhsc_agn.py 
+```
+Corresponding folders and associated catalogs will be created. 
 ### Applying trained PSFGAN models
 ### Applying trained GaMPEN models
 #### Inference
