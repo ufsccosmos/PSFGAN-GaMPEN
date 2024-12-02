@@ -60,7 +60,34 @@ If you want to apply our model(s) on a dataset, please make sure that:
 - We suggest to only use our models for an accurate estimation of bulge-to-total flux ratio for sources within **z<0.9** and of galaxy magnitude/flux & effective radius within **z<1.4** (see Figure 10 in our paper). You may still apply our models for your parameters of interest on sources beyond this range, but the result may not be optimal.
 
 Once you've checked that these conditions are met, please divide your dataset by the redshift of sources. Then, in each of the redshift bin(s), please first apply our trained model of `PSFGAN` to remove the bright AGN PS. The image of the recovered host galaxy can then be sent to our trained model of `GaMPEN`, which will estimate the three structural parameters (mentioned above) of the host galaxy. **Please keep in mind that in each redshift bin, our trained model of `GaMPEN` can only be applied on images processed by our trained model of `PSFGAN` (i.e., images of PSFGAN-recovered host galaxies)**. One may not apply our trained `GaMPEN` models on inactive galaxies (for instance). Also, models of `PSFGAN` and `GaMPEN` from different redshift bins can not be used together.
+
+From now on, we will mostly use the low redshift bin (for sources within **z<0.25**, using **g-band** images from the HSC Wide Survey) as an example. We will occasionally talk about other redshift bins when necessary (e.g., when summarizing hyperparameter choices). 
+
+Before start, please make sure you have the following directory structure under the `PSFGAN/` folder:
+```bash
+PSFGAN-GaMPEN/
+├── PSFGAN 
+    ├── config.py
+    ├── data.py
+    ├── data_split_agn.py
+    ├── galfit.py
+    ├── model.py
+    ├── normalizing.py
+    ├── photometry.py
+    ├── roouhsc_agn.py
+    ├── test.py
+    ├── train.py
+    ├── utils.py
+    └── {target dataset name}
+        └──  g-band
+            └── raw_data
+                ├── images
+                └── {catalog in .csv format}
+└── GaMPEN
+```
+For the target dataset, its raw data images should be stored (in .fits format) in an `image` folder. There should also be a separate catalog file (in .csv format) that contains necessary information of each image. Other columns are optional and users can include as many as they want. Though it would be the user's responsibility to properly handle extra columns when generating new .csv files (see below).
 ### Data splitting
+
 ### Real AGN image normalization
 ### Applying trained PSFGAN models
 ### Applying trained GaMPEN models
