@@ -115,7 +115,7 @@ You should also add appropriate codes at the ends of the following two blocks to
                     'z': current_row['z'],
                     filter_strings[i] + '_total_flux': (current_row[filter_strings[i] + '_cmodel_flux'])*nJy_to_adu_per_AA_filters[i]}, ignore_index=True)
 ```
-`data_split_agn.py` creates a new catalog file from the old (`{catalog in .csv format}` under `raw_data/`). The first block determines names of the columns in the new catalog file while the second block determines how each column in the new catalog is related to columns from the old catalog.
+`data_split_agn.py` creates a new catalog from the old (`{catalog in .csv format}` under `raw_data/`). The first block determines names of the columns in the new catalog while the second block determines how each column in the new catalog is related to columns from the old catalog.
 
 At last, change the following block appropriately to process raw images. You may simply insert `or (source == "{target dataset name}")` within the `if` clause to stick with our conventions.
 ```bash
