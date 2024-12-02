@@ -133,7 +133,7 @@ At last, change the following block appropriately to process raw images. You may
             images.append(image)
 ```
 
-Once these parameters are properly set, ran `python PSFGAN-GaMorNet/PSFGAN/data_split_agn.py`.
+Once these parameters are properly set, ran `python PSFGAN-GaMPEN/PSFGAN/data_split_agn.py`.
 Corresponding folders and their associated catalogs will be created.
 ### Real AGN image normalization
 ### Applying trained PSFGAN models
