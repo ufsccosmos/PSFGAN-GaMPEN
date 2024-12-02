@@ -33,7 +33,7 @@ In this section, we will present a quick guide so readers can learn how to effec
 ### Introduction
 This guide will allow readers to apply our trained models of `PSFGAN-GaMPEN` on real AGNs in the HSC Wide Survey for an estimation of host galaxy magnitude/flux, effective radius and bulge-to-total flux ratio.
 
-As illustrated in the paper, in each of the five redshift bins, we trained an individual model of `PSFGAN` and an individual model of `GaMorNet`:
+As illustrated in the paper, in each of the following five redshift bins, we trained an individual model of `PSFGAN` and an individual model of `GaMorNet`:
 ```bash
 Low redshift bin (0 < z < 0.25)
     └── PSFGAN for g-band
@@ -56,10 +56,10 @@ This is to ensure that we are approximately focusing on images from a restframe 
 If you want to apply our model(s) on a dataset, please make sure that:
 - Sources in the dataset you're using are imaged in **the corresponding filter** (depending on their redshifts) of the HSC Wide Survey. For example, if your sources are within **0.5<z<0.9**, images from the i-band of the HSC Wide Survey should be fed to our models.
 - Each image has a size of **185 by 185 pixels** and the real AGN to-be-studied is located at the center of the image.
-- All sources are **real AGNs (active galaxies)** and the AGN PS to host galaxy flux ratio in any filter is equal to or less than 4 (subtracting an extremely luminous AGN PS using `PSFGAN` may leave a much larger residual and can thus confuse `GaMPEN` for accurate parameter estimation.
-- We suggest to only use our models for an accurate estimation of bulge-to-total flux ratio for source within **z<0.9** and of galaxy magnitude/flux & effective radius within **z<1.4** (see Figure 10 in our paper). You may still apply our models for your parameters of interest on sources beyond this range, but the result may not be optimal.
+- All sources are **real AGNs (active galaxies)** and the AGN point sources (PS) to host galaxy flux ratio in any filter is equal to or less than 4 (subtracting an extremely luminous AGN PS using `PSFGAN` may leave a much larger residual and can thus confuse `GaMPEN` for accurate parameter estimation).
+- We suggest to only use our models for an accurate estimation of bulge-to-total flux ratio for sources within **z<0.9** and of galaxy magnitude/flux & effective radius within **z<1.4** (see Figure 10 in our paper). You may still apply our models for your parameters of interest on sources beyond this range, but the result may not be optimal.
 
-
+Once you've checked that these conditions are met, please divide your dataset by the redshift of sources. Then, in each of the redshift bin(s), please first apply our trained model of `PSFGAN` to remove the bright AGN PS. The image of the recovered host galaxy can then be sent to our trained model of `GaMPEN`, which will estimate the three structural parameters (mentioned above) of the host galaxy. Please keep in mind that in each redshift bin, our trained model of `GaMPEN` can only be applied on images processed by our trained model of `PSFGAN` (i.e., images of PSFGAN-recovered host galaxies). One may not apply our trained `GaMPEN` models on inactive galaxies (for instance). Also, models of `PSFGAN` and `GaMPEN` from different redshift bins can not be used together.
 ### Data splitting
 ### Real AGN image normalization
 ### Applying trained PSFGAN models
