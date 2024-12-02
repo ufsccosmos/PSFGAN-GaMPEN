@@ -91,14 +91,50 @@ Essentially, the first step we want to do is to put all raw images in a single f
 
 In `data_split_agn.py`, set the following parameters to the correct values before proceed:
 - `core_path`: full path of the `PSFGAN/` folder
-- `galaxy_main`: `core_path` + `'{target dataset name}/'` 
+- `galaxy_main`: `core_path` + `'{target dataset name}/'` (users have the freedom to name this folder --- once it is chosen it should be fixed)
 - `filter_strings`: `['g']` (if you are using our trained models not from the low redshift bin, change this appropriately --- `['r']`, `['i']`, `['z']` or `['y']` --- see the previous section)
 - `desired_shape`: `[185, 185]` (desired shape of output images in pixels --- **it has to be `[185, 185]` when using our trained models**)
 - `--test`: set its default value to the number of galaxies your target dataset has
 - `--shuffle`: `1` (`1` to shuffle images before splitting, `0` otherwise)
 - `--source`: `'{target dataset name}'` (name of the target dataset --- this should be the same of the corresponding folder name)
 
+You should also add appropriate codes at the ends of the following two blocks to process catalogs in `{target dataset name}`:
+```bash
+        elif source == "liu":
+            column_list = ['object_id', 'ra', 'dec', 'specz_redshift', 'specz_flag_homogeneous',
+                          'z', 
+                          filter_string + '_total_flux']
+```
+```bash
+                elif source == "liu":
+                    test_catalogs[i] = test_catalogs[i].append({'object_id': obj_id,
+                    'ra': current_row['ra'],
+                    'dec': current_row['dec'],
+                    'specz_redshift': current_row['specz_redshift'],
+                    'specz_flag_homogeneous': current_row['specz_flag_homogeneous'],
+                    'z': current_row['z'],
+                    filter_strings[i] + '_total_flux': (current_row[filter_strings[i] + '_cmodel_flux'])*nJy_to_adu_per_AA_filters[i]}, ignore_index=True)
+```
+`data_split_agn.py` creates a new catalog file from the old (`{catalog in .csv format}` under `raw_data/`). The first block determines names of the columns in the new catalog file while the second block determines how each column in the new catalog is related to columns from the old catalog.
 
+At last, change the following block appropriately to process raw images. You may simply insert `or (source == "{target dataset name}")` within the `if` clause to stick with our conventions.
+```bash
+    for row_num in row_num_list:
+        if (source == "nair") or (source == "gabor_0.3_0.5") or (source == "gabor_0.5_0.75") or (source == "povic_0_0.5") or (source == "povic_0.5_0.75") or (source == "stemo_0.2_0.5") or (source == "stemo_0.5_1.0") or (source == "liu"):
+            obj_id = int(row_num)
+
+        # Read the images
+        images = []
+        for i in range(num_filters):
+            if (source == "nair") or (source == "gabor_0.3_0.5") or (source == "gabor_0.5_0.75") or (source == "povic_0_0.5") or (source == "povic_0.5_0.75") or (source == "stemo_0.2_0.5") or (source == "stemo_0.5_1.0") or (source == "liu"):
+                fits_path = '%s/%s-cutout-*.fits' % (hsc_folders[i], obj_id)
+            file = glob.glob(fits_path)[0]
+            image = fits.getdata(file)
+            images.append(image)
+```
+
+Once these parameters are properly set, ran `python PSFGAN-GaMorNet/PSFGAN/data_split_agn.py`.
+Corresponding folders and their associated catalogs will be created.
 ### Real AGN image normalization
 ### Applying trained PSFGAN models
 ### Applying trained GaMPEN models
