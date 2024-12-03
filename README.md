@@ -201,6 +201,26 @@ python PSFGAN-GaMPEN/PSFGAN/roouhsc_agn.py
 ```
 Corresponding folders and associated catalogs will be created. 
 ### Applying trained PSFGAN models
+Note: please use a `Python 2.7` environment for `PSFGAN` related tasks.
+
+(Individually in each redshift bin & filter) We now apply trained `PSFGAN` models on real AGNs in the dataset. It will remove AGN PS and generate images of recovered host galaxies, which can then be used as inputs for `GaMPEN` models. 
+
+Set the following parameters before proceed:
+
+In `config.py`:
+- `learning_rate`: (just for creating corresponding folder names) this should be `0.00005`, `0.000015`, `0.00002`, `0.000008`or `0.000008`for the `low`, `mid`, `high`, `extra`, or `extreme` redshift bin, respectively. 
+- `attention_parameter`: `0.05` (just for creating corresponding folder names)
+- `model_path`: `'{location of the trained PSFGAN model in the redshift bin of interest}'` (you can access trained `PSFGAN` models in each of the five redshift bins & filters in this [Google Drive](https://drive.google.com/drive/folders/1cSxARao_UVPG9RlhYYjp-LvRQOWgA3DB?usp=sharing))
+- `beta1`: `0.5`
+- `L1_lambda`: `100`
+- `sum_lambda`: `0`
+- `test_epoch`: this should be `20` for the `low`, `mid`, and `high` redshift bins and `40` for the `extra` and `extreme` redshift bins, respectively.
+- `img_size`: `185`
+- `train_size`: `185`
+
+
+
+
 ### Applying trained GaMPEN models
 #### Inference
 #### Result Aggregation
