@@ -337,10 +337,44 @@ Note there are many flags one needs to specify in order to run the above command
 - `no-errors`
 - `cov_errors`
 - `no-labels`: this indicates that we are applying the `GaMPEN` model on a previously unlabelled dataset and therefore it should be left on
-- `scaling_data_dir`: `'{location of the scaling file}'` this should be `PSFGAN-GaMPEN/GaMPEN/ggt/data/{scaling file folder}/`, where `{scaling file folder}` is `gal_real_0_0.25_gmp`, `gal_real_0.25_0.5_gmp`, `gal_real_0.5_0.9_gmp`, `gal_real_0.9_1.1_gmp` or `gal_real_1.1_1.4_gmp` for the `low`, `mid`, `high`, `extra` or `extreme` redshift bin, respectively.
+- `scaling_data_dir`: `'{location of the scaling file for the inference step}'` this should be `PSFGAN-GaMPEN/GaMPEN/ggt/data/{scaling file folder}/`, where `{scaling file folder}` is `gal_real_0_0.25_gmp`, `gal_real_0.25_0.5_gmp`, `gal_real_0.5_0.9_gmp`, `gal_real_0.9_1.1_gmp` or `gal_real_1.1_1.4_gmp` for the `low`, `mid`, `high`, `extra` or `extreme` redshift bin, respectively.
 - `scaling_slug`: this should always be `balanced-dev2` for our trained `GaMPEN` models
   
 Run the above command with all flags properly set. If you are following our conventions, inference result should be in the `PSFGAN-GaMPEN/GaMPEN/ggt/data/modules/inference_results/{target dataset name}/` folder.
 #### Result Aggregation
 The final step is to aggregate inference results from the previous section --- this will generate a summary catalog that contains statistical facts about the three structural parameters we care about.
+
+Similarly, run the following in an appropriate environment:
+```bash
+python PSFGAN-GaMPEN/GaMPEN/ggt/modules/result_aggregator.py --data_dir={some data_dir} --{flag X} ... --{flag Y} --unscale --{flag Z} ...
+```
+
+Likewise, there are many flags one needs to specify in order to run the above command. Flags take the format of `--{flag A}={input A}` if there is an input or `--{flag B}` if no input is needed. Specifically:
+
+(For your reference, please also refer to [this page](https://gampen.readthedocs.io/en/latest/Using_GaMPEN.html#result-aggregator) for a detailed description of all possible flags) 
+
+- `data_dir`: this should be the location where inference results from `GaMPEN` are stored. If you are following our conventions, this location should be `PSFGAN-GaMPEN/GaMPEN/ggt/data/modules/inference_results/{target dataset name}/` (i.e., the value of `output_path` flag in `inference.py`)
+- `num`: the number of inference results to be aggregated. This generally equals to the value of `n_runs` flag in `inference.py`.
+- `out_summary_df_path`: where to put the final summary catalog --- for example `PSFGAN-GaMPEN/GaMPEN/ggt/data/modules/inference_results/{target dataset name}/summary.csv`
+- `out_pdfs_path`: where to put the pdf files from the result aggregation --- for example `PSFGAN-GaMPEN/GaMPEN/ggt/data/modules/inference_results/{target dataset name}/pdfs/`
+- `unscale`: this should always be left on when using our trained `GaMPEN` models since we are going to perform the unscaling
+- `scaling_df_path`: this is where the scaling file is located for the result aggregation step. This should be `PSFGAN-GaMPEN/GaMPEN/ggt/data/{scaling file folder}/info.csv`, where `{scaling file folder}` is `gal_real_0_0.25_gmp`, `gal_real_0.25_0.5_gmp`, `gal_real_0.5_0.9_gmp`, `gal_real_0.9_1.1_gmp` or `gal_real_1.1_1.4_gmp` for the `low`, `mid`, `high`, `extra` or `extreme` redshift bin, respectively.
+- `drop_old`: the unscaled prediction columns will be dropped if left on
+
+Run the above command with all flags properly set. If you are following our conventions, the aggregated summary catalog should be at `PSFGAN-GaMPEN/GaMPEN/ggt/data/modules/inference_results/{target dataset name}/summary.csv` and the pdf files should be in the `PSFGAN-GaMPEN/GaMPEN/ggt/data/modules/inference_results/{target dataset name}/pdfs/` folder.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
