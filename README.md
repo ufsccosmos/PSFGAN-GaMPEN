@@ -258,7 +258,7 @@ Outputs (i.e., recovered host galaxy images) will be saved at `PSFGAN-GaMPEN/PSF
 
 Notes: 
 1) Please use a `Python 3.7` environment for `GaMPEN` related tasks. See [this page](https://gampen.readthedocs.io/en/latest/Getting_Started.html) for details. You can use `make requirements` and `make check` to quickly set up an environment with all prerequisite packages downloaded.
-2) It is not mandatory to use a `GPU` for `GaMPEN` for the steps of inference and result aggregation. That being said, if you would like to use a `GPU`, please install .appropriate versions of `CUDA` and `cuDNN`. We assume you have access to a `GPU` for the rest of this tutorial.
+2) It is not mandatory to use a `GPU` for `GaMPEN` for the steps of inference and result aggregation. That being said, if you would like to use a `GPU`, please install appropriate versions of `CUDA` and `cuDNN`. We assume you have access to a `GPU` for the rest of this tutorial.
 3) See [this page](https://gampen.readthedocs.io/en/latest/index.html) for a **comprehensive introduction about `GaMPEN`**. 
 
 Once the environment is set up,  please make sure you have the following directory structure under the `GaMPEN/` folder:
