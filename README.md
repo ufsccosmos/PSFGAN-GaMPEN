@@ -337,7 +337,7 @@ Note there are many flags one needs to specify in order to run the above command
 - `no-errors`
 - `cov_errors`
 - `no-labels`: this indicates that we are applying the `GaMPEN` model on a previously unlabelled dataset and therefore it should be left on
-- `scaling_data_dir`: `'{location of the scaling file}' this should be `PSFGAN-GaMPEN/GaMPEN/ggt/data/{scaling file folder}/`, where `{scaling file folder}` is `gal_real_0_0.25_gmp`, `gal_real_0.25_0.5_gmp`, `gal_real_0.5_0.9_gmp`, `gal_real_0.9_1.1_gmp` or `gal_real_1.1_1.4_gmp` for the `low`, `mid`, `high`, `extra` or `extreme` redshift bin, respectively.
+- `scaling_data_dir`: `'{location of the scaling file}'` this should be `PSFGAN-GaMPEN/GaMPEN/ggt/data/{scaling file folder}/`, where `{scaling file folder}` is `gal_real_0_0.25_gmp`, `gal_real_0.25_0.5_gmp`, `gal_real_0.5_0.9_gmp`, `gal_real_0.9_1.1_gmp` or `gal_real_1.1_1.4_gmp` for the `low`, `mid`, `high`, `extra` or `extreme` redshift bin, respectively.
 - `scaling_slug`: this should always be `balanced-dev2` for our trained `GaMPEN` models
   
 Run the above command with all flags properly set. If you are following our conventions, inference result should be in the `PSFGAN-GaMPEN/GaMPEN/ggt/data/modules/inference_results/{target dataset name}/` folder.
