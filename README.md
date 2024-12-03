@@ -318,7 +318,7 @@ Note there are many flags one needs to specify in order to run the above command
 - `model_type`: `'vgg16_w_stn_oc_drp'`
 - `model_path`: `'{location of the trained GaMPEN model in the redshift bin of interest}'` (you can download our trained `GaMPEN` model in each of the five redshift bins & filters from this [Google Drive](https://drive.google.com/drive/folders/1cSxARao_UVPG9RlhYYjp-LvRQOWgA3DB?usp=sharing)) this should point to the .pt file
 - `output_path`: `'{location to store inference results of the GaMPEN model}'` you may simply set it as `PSFGAN-GaMPEN/GaMPEN/ggt/data/modules/inference_results/{target dataset name}/` to stick with our conventions
-- `data_dir`: `'{location of the input dataset}'` this should be `PSFGAN-GaMPEN/GaMPEN/ggt/data/{target dataset name}/`, which contains the `cutouts/` folder and the `info.csv` catalog as specified above
+- `data_dir`: `'{location of the input dataset}'` this should be `PSFGAN-GaMPEN/GaMPEN/ggt/data/{target dataset name}/`, which contains the `cutouts/` folder and the `info.csv` catalog as mentioned above
 - `cutout_size`: this should be `179` or `143` for the `low` or `mid` redshift bin, respectively. For the `high`, `extra` and `extreme` redshift bins, this should be `95`
 - `channels`: `3`
 - `slug`: `None`
