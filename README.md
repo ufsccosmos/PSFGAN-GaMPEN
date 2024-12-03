@@ -186,7 +186,7 @@ You should also add appropriate codes at the ends of the following two blocks to
 ```
 `roouhsc_agn.py` creates a new catalog from the old (`catalog_test.csv` under `{target dataset name}/{the corresponding filter}-band/`). The first block determines names of the columns in the new catalog while the second block determines how each column in the new catalog is related to columns from the old catalog.
 
-At last, change the following block appropriately to check negative fluxes. You may simply insert `or (source == "{target dataset name}")` within the `if` clause to stick with our conventions. If there is no flux column you may skip this part and leave this block unchanged.
+At last, change the following block appropriately to check negative fluxes. You may simply insert `or (source == "{target dataset name}")` within the `if` clause in case your flux column has the same format as ours (e.g., `'g_total_flux'`). If there is no flux column you may skip this part and leave this block unchanged.
 ```bash
             if (source == 'nair') or (source == 'gabor_0.3_0.5') or (source == 'gabor_0.5_0.75') or (source == 'povic_0_0.5') or (source == 'povic_0.5_0.75') or (source == 'stemo_0.2_0.5') or (source == 'stemo_0.5_1.0') or (source == 'liu'):
                 flux = obj_line[filters_string[f_index] + '_total_flux'].item()
