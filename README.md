@@ -210,7 +210,7 @@ Set the following parameters before proceed:
 In `config.py`:
 - `learning_rate`: (just for creating corresponding folder names) this should be `0.00005`, `0.000015`, `0.00002`, `0.000008` or `0.000008` for the `low`, `mid`, `high`, `extra`, or `extreme` redshift bin, respectively
 - `attention_parameter`: `0.05` (just for creating corresponding folder names)
-- `model_path`: `'{location of the trained PSFGAN model in the redshift bin of interest}'` (you can download our trained `PSFGAN` models in each of the five redshift bins & filters from this [Google Drive](https://drive.google.com/drive/folders/1cSxARao_UVPG9RlhYYjp-LvRQOWgA3DB?usp=sharing)) this should point to the .ckpt file
+- `model_path`: `'{location of the trained PSFGAN model in the redshift bin of interest}'` (you can download our trained `PSFGAN` model in each of the five redshift bins & filters from this [Google Drive](https://drive.google.com/drive/folders/1cSxARao_UVPG9RlhYYjp-LvRQOWgA3DB?usp=sharing)) this should point to the .ckpt file
 - `beta1`: `0.5`
 - `L1_lambda`: `100`
 - `sum_lambda`: `0`
@@ -302,7 +302,45 @@ Here, folders such as `gal_real_0_0.25_gmp` contains scaling files. **These five
 
 In addition, please copy all images from the `PSFGAN` output (`PSFGAN-GaMPEN/PSFGAN/{target dataset name}/{the corresponding filter}-band/{stretch_type}_{scale_factor}/lintrain_classic_PSFGAN_{attention_parameter}/lr_{learning_rate}/PSFGAN_output/epoch_{test_epoch}/fits_output/`) to the `PSFGAN-GaMPEN/GaMPEN/ggt/data/{target dataset name}/cutouts/` folder. 
 
-Please also copy the catalog file (`PSFGAN-GaMPEN/PSFGAN/{target dataset name}/{the corresponding filter}-band/{stretch_type}_{scale_factor}/npy_input/catalog_test_npy_input.csv`) to `PSFGAN-GaMPEN/GaMPEN/ggt/data/{target dataset name}/` and **rename it as info.csv**. **This info.csv file must have a column called "file_name" that contains filenames of images in the `cutouts/` folder**.
+Please also copy the catalog file (`PSFGAN-GaMPEN/PSFGAN/{target dataset name}/{the corresponding filter}-band/{stretch_type}_{scale_factor}/npy_input/catalog_test_npy_input.csv`) to `PSFGAN-GaMPEN/GaMPEN/ggt/data/{target dataset name}/` and **rename it as `info.csv`**. **This `info.csv` file must have a column called "file_name" that contains filenames of images in the `cutouts/` folder**.
 #### Inference
+Now we have set up the environment for `GaMPEN` and prepared images, catalog and scaling files. It's the time to perform inference using `GaMPEN` models. 
+
+To perform inference using a `GaMPEN` model, simply run the following in an appropriate environment:
+```bash
+python PSFGAN-GaMPEN/GaMPEN/ggt/data/modules/inference.py --model_type={some model type} --{flag X} ... --{flag Y} --normalize --{flag Z} ...
+```
+
+Note there are many flags one needs to specify in order to run the above command. Flags take the format of `--{flag A}={input A}` if there is an input or `--{flag B}` if no input is needed. Specifically:
+
+(For your reference, please also refer to [this page](https://gampen.readthedocs.io/en/latest/Using_GaMPEN.html#inference) for a detailed description of all possible flags) 
+
+- `model_type`: `'vgg16_w_stn_oc_drp'`
+- `model_path`: `'{location of the trained GaMPEN model in the redshift bin of interest}'` (you can download our trained `GaMPEN` model in each of the five redshift bins & filters from this [Google Drive](https://drive.google.com/drive/folders/1cSxARao_UVPG9RlhYYjp-LvRQOWgA3DB?usp=sharing)) this should point to the .pt file
+- `output_path`: `'{location to store inference results of the GaMPEN model}'` you may simply set it as `PSFGAN-GaMPEN/GaMPEN/ggt/data/modules/inference_results/{target dataset name}/` to stick with our conventions
+- `data_dir`: `'{location of the input dataset}'` this should be `PSFGAN-GaMPEN/GaMPEN/ggt/data/{target dataset name}/`, which contains the `cutouts/` folder and the `info.csv` catalog as specified above
+- `cutout_size`: this should be `179` or `143` for the `low` or `mid` redshift bin, respectively. For the `high`, `extra` and `extreme` redshift bins, this should be `95`
+- `channels`: `3`
+- `slug`: `None`
+- `split`: `None`
+- `normalize`
+- `label_scaling`: the inverse transformation to be performed --- **this must be `'std'` for our trained `GaMPEN` models**
+- `batch_size` and `n_workers`: see [this page](https://gampen.readthedocs.io/en/latest/Using_GaMPEN.html#inference)
+- `parallel`
+- `label_cols`: the column names for the three structural parameters --- **this must be (exactly) 'custom_logit_bt,ln_R_e_asec,ln_total_flux_adus' for our trained `GaMPEN` models**
+- `repeat_dims`
+- `mc_dropout`: this enables the Monte Carlo dropout during inference and should be left on for our trained `GaMPEN` models
+- `n_runs`: how many feedforward inference passes you would like (since the Monte Carlo dropout is enabled, we will essentially feed the same input to a slightly different network during each feedforward inference pass) --- we used to set it to `1000` but it's up to your scientific question at hand as well as available computational resources
+- `ini_run_num`: `1`
+- `dropout_rate`: for our trained `GaMPEN` models, this should be `0.0004` for the `low` redshift bin, `0.0002` for the `mid` and `high` redshift bins, and `0.00015` for the `extra` and `extreme` redshift bins, respectively. 
+- `transform`
+- `no-errors`
+- `cov_errors`
+- `no-labels`: this indicates that we are applying the `GaMPEN` model on a previously unlabelled dataset and should be left on
+- `scaling_data_dir`: `'{location of the scaling file}' this should be `PSFGAN-GaMPEN/GaMPEN/ggt/data/{scaling file folder}/`, where `{scaling file folder}` is `gal_real_0_0.25_gmp`, `gal_real_0.25_0.5_gmp`, `gal_real_0.5_0.9_gmp`, `gal_real_0.9_1.1_gmp` or `gal_real_1.1_1.4_gmp` for the `low`, `mid`, `high`, `extra` or `extreme` redshift bin, respectively.
+- `scaling_slug`: this should always be `balanced-dev2` for our trained `GaMPEN` models
+  
+Run the above command with all flags properly set. If you are following our conventions, inference result should be in the `PSFGAN-GaMPEN/GaMPEN/ggt/data/modules/inference_results/{target dataset name}/` folder.
 #### Result Aggregation
+The final step is to aggregate inference results from the previous section --- this will generate a summary catalog that contains statistical facts about the three structural parameters we care about.
 
