@@ -308,7 +308,7 @@ Now we have set up the environment for `GaMPEN` and prepared images, catalog and
 
 To perform inference using a `GaMPEN` model, simply run the following in an appropriate environment:
 ```bash
-python PSFGAN-GaMPEN/GaMPEN/ggt/data/modules/inference.py --model_type={some model type} --{flag X} ... --{flag Y} --normalize --{flag Z} ...
+python PSFGAN-GaMPEN/GaMPEN/ggt/modules/inference.py --model_type={some model type} --{flag X} ... --{flag Y} --normalize --{flag Z} ...
 ```
 
 Note there are many flags one needs to specify in order to run the above command. Flags take the format of `--{flag A}={input A}` if there is an input or `--{flag B}` if no input is needed. Specifically:
