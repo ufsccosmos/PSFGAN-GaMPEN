@@ -203,14 +203,14 @@ Corresponding folders and associated catalogs will be created.
 ### Applying trained PSFGAN models
 Note: please use a `Python 2.7` environment for `PSFGAN` related tasks.
 
-(Individually in each redshift bin & filter) We now apply trained `PSFGAN` models on real AGNs in the dataset. It will remove AGN PS and generate images of recovered host galaxies, which can then be used as inputs for `GaMPEN` models. 
+(Individually in each redshift bin & filter) We now apply our trained `PSFGAN` model on real AGNs in the dataset. It will remove the AGN PS and generate images of recovered host galaxies, which can then be used as inputs for `GaMPEN` models. 
 
 Set the following parameters before proceed:
 
 In `config.py`:
-- `learning_rate`: (just for creating corresponding folder names) this should be `0.00005`, `0.000015`, `0.00002`, `0.000008`or `0.000008`for the `low`, `mid`, `high`, `extra`, or `extreme` redshift bin, respectively. 
+- `learning_rate`: (just for creating corresponding folder names) this should be `0.00005`, `0.000015`, `0.00002`, `0.000008` or `0.000008` for the `low`, `mid`, `high`, `extra`, or `extreme` redshift bin, respectively
 - `attention_parameter`: `0.05` (just for creating corresponding folder names)
-- `model_path`: `'{location of the trained PSFGAN model in the redshift bin of interest}'` (you can access trained `PSFGAN` models in each of the five redshift bins & filters in this [Google Drive](https://drive.google.com/drive/folders/1cSxARao_UVPG9RlhYYjp-LvRQOWgA3DB?usp=sharing))
+- `model_path`: `'{location of the trained PSFGAN model in the redshift bin of interest}'` (you can access our trained `PSFGAN` models in each of the five redshift bins & filters in this [Google Drive](https://drive.google.com/drive/folders/1cSxARao_UVPG9RlhYYjp-LvRQOWgA3DB?usp=sharing)) this should point to the .ckpt file
 - `beta1`: `0.5`
 - `L1_lambda`: `100`
 - `sum_lambda`: `0`
@@ -218,9 +218,41 @@ In `config.py`:
 - `img_size`: `185`
 - `train_size`: `185`
 
+Other parameters should be kept the same as in the previous step.
 
+In `model.py`:
 
+If you are using our `low` redshift bin PSFGAN model:
+```bash
+self.image_00 = tf.slice(self.image, [0, 81, 81, 0], [1, 22, 22, conf.img_channel])
+self.cond_00 = tf.slice(self.cond, [0, 81, 81, 0], [1, 22, 22, conf.img_channel])
+self.g_img_00 = tf.slice(self.gen_img, [0, 81, 81, 0], [1, 22, 22, conf.img_channel])
+```
 
+If you are using our `mid` redshift bin PSFGAN model:
+```bash
+self.image_00 = tf.slice(self.image, [0, 84, 84, 0], [1, 16, 16, conf.img_channel])
+self.cond_00 = tf.slice(self.cond, [0, 84, 84, 0], [1, 16, 16, conf.img_channel])
+self.g_img_00 = tf.slice(self.gen_img, [0, 84, 84, 0], [1, 16, 16, conf.img_channel])
+```
+
+If you are using our `high` redshift bin PSFGAN model:
+```bash
+self.image_00 = tf.slice(self.image, [0, 85, 85, 0], [1, 14, 14, conf.img_channel])
+self.cond_00 = tf.slice(self.cond, [0, 85, 85, 0], [1, 14, 14, conf.img_channel])
+self.g_img_00 = tf.slice(self.gen_img, [0, 85, 85, 0], [1, 14, 14, conf.img_channel])
+```
+
+If you are using our `extra` or `extreme` redshift bin PSFGAN model:
+```bash
+self.image_00 = tf.slice(self.image, [0, 86, 86, 0], [1, 12, 12, conf.img_channel])
+self.cond_00 = tf.slice(self.cond, [0, 86, 86, 0], [1, 12, 12, conf.img_channel])
+self.g_img_00 = tf.slice(self.gen_img, [0, 86, 86, 0], [1, 12, 12, conf.img_channel])
+```
+
+Then, ran `python PSFGAN-GaMPEN/PSFGAN/test.py --mode test` to apply the trained `PSFGAN` model on the dataset in the current redshift bin. 
+
+Outputs will be saved at `PSFGAN-GaMPEN/PSFGAN/{target dataset name}/{the corresponding filter}-band/{stretch_type}_{scale_factor}/lintrain_classic_PSFGAN_{attention_parameter}/lr_{learning_rate}/PSFGAN_output/epoch_{test_epoch}/fits_output/`. The catalog file is stored at `PSFGAN-GaMPEN/PSFGAN/{target dataset name}/{the corresponding filter}-band/{stretch_type}_{scale_factor}/npy_input/catalog_test_npy_input.csv` (created by roouhsc_agn.py in the previous section).
 ### Applying trained GaMPEN models
 #### Inference
 #### Result Aggregation
