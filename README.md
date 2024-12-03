@@ -298,7 +298,7 @@ PSFGAN-GaMPEN/
     └── setup.py
 ```
 
-Here, folders such as `gal_real_0_0.25_gmp` contains scaling files. **These five folders are not there by default and users need to manually download them from the `Scaling Files` folder in this [Google Drive](https://drive.google.com/drive/folders/1cSxARao_UVPG9RlhYYjp-LvRQOWgA3DB?usp=sharing) and put them exactly under `PSFGAN-GaMPEN/GaMPEN/ggt/data/`**. They contains information about inverse transformations (to be processed by `GaMPEN` models) and are therefore **indispensable for the inference and result aggregation steps**.
+Here, folders such as `gal_real_0_0.25_gmp` contains scaling files. **These five folders are not there by default and users need to manually download them from the `Scaling Files` folder in this [Google Drive](https://drive.google.com/drive/folders/1cSxARao_UVPG9RlhYYjp-LvRQOWgA3DB?usp=sharing) and put them exactly under `PSFGAN-GaMPEN/GaMPEN/ggt/data/`**. They contain information about inverse transformations (to be processed by `GaMPEN` models) and are therefore **indispensable for the inference and result aggregation steps**.
 
 In addition, please copy all images from the `PSFGAN` output (`PSFGAN-GaMPEN/PSFGAN/{target dataset name}/{the corresponding filter}-band/{stretch_type}_{scale_factor}/lintrain_classic_PSFGAN_{attention_parameter}/lr_{learning_rate}/PSFGAN_output/epoch_{test_epoch}/fits_output/`) to the `PSFGAN-GaMPEN/GaMPEN/ggt/data/{target dataset name}/cutouts/` folder. 
 
