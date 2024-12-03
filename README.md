@@ -330,7 +330,7 @@ Note there are many flags one needs to specify in order to run the above command
 - `label_cols`: the column names for the three structural parameters --- **this must be (exactly) 'custom_logit_bt,ln_R_e_asec,ln_total_flux_adus' for our trained `GaMPEN` models**
 - `repeat_dims`
 - `mc_dropout`: this enables the Monte Carlo dropout during inference and should be left on for our trained `GaMPEN` models
-- `n_runs`: how many feedforward inference passes you would like (since the Monte Carlo dropout is enabled, we will essentially feed the same input to a slightly different network during each feedforward inference pass) --- we used to set it to `1000` but it's up to your scientific question at hand as well as available computational resources
+- `n_runs`: how many feedforward inference passes you would like to perform (since the Monte Carlo dropout is enabled, we will essentially feed the same input to a slightly different network during each feedforward inference pass) --- we used to set it to `1000` but it's up to your scientific question at hand as well as available computational resources
 - `ini_run_num`: `1`
 - `dropout_rate`: for our trained `GaMPEN` models, this should be `0.0004` for the `low` redshift bin, `0.0002` for the `mid` and `high` redshift bins, and `0.00015` for the `extra` and `extreme` redshift bins, respectively. 
 - `transform`
