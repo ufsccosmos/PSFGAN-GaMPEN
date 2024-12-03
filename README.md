@@ -252,8 +252,55 @@ self.g_img_00 = tf.slice(self.gen_img, [0, 86, 86, 0], [1, 12, 12, conf.img_chan
 
 Then, ran `python PSFGAN-GaMPEN/PSFGAN/test.py --mode test` to apply the trained `PSFGAN` model on the dataset in the current redshift bin. 
 
-Outputs will be saved at `PSFGAN-GaMPEN/PSFGAN/{target dataset name}/{the corresponding filter}-band/{stretch_type}_{scale_factor}/lintrain_classic_PSFGAN_{attention_parameter}/lr_{learning_rate}/PSFGAN_output/epoch_{test_epoch}/fits_output/`. The catalog file is stored at `PSFGAN-GaMPEN/PSFGAN/{target dataset name}/{the corresponding filter}-band/{stretch_type}_{scale_factor}/npy_input/catalog_test_npy_input.csv` (created by roouhsc_agn.py in the previous section).
+Outputs (i.e., recovered host galaxy images) will be saved at `PSFGAN-GaMPEN/PSFGAN/{target dataset name}/{the corresponding filter}-band/{stretch_type}_{scale_factor}/lintrain_classic_PSFGAN_{attention_parameter}/lr_{learning_rate}/PSFGAN_output/epoch_{test_epoch}/fits_output/`. The catalog file is stored at `PSFGAN-GaMPEN/PSFGAN/{target dataset name}/{the corresponding filter}-band/{stretch_type}_{scale_factor}/npy_input/catalog_test_npy_input.csv` (created by roouhsc_agn.py in the previous section).
 ### Applying trained GaMPEN models
+(Individually in each redshift bin & filter) We now apply our trained `GaMPEN` model on recovered host galaxy images (outputs of our trained `PSFGAN` model --- see the previous section). It's worth mentioning that each input image (of recovered galaxy) is fed to the `GaMPEN` model for many times (inference). Then we aggregate these inference results to make the final summary catalog for each of the three structural parameters we are interested (result aggregation).
+
+Notes: 
+1) Please use a `Python 3.7` environment for `GaMPEN` related tasks. See [this page](https://gampen.readthedocs.io/en/latest/Getting_Started.html) for details. You can use `make requirements` and `make check` to quickly set up an environment with all prerequisite packages downloaded.
+2) It is not mandatory to use a `GPU` for `GaMPEN` the steps of inference and result aggregation. That being said, if you would like to use a `GPU`, please install .appropriate versions of `CUDA` and `cuDNN`. We assume you have access to a `GPU` for the rest of this tutorial.
+3) See [this page](https://gampen.readthedocs.io/en/latest/index.html) for a **comprehensive introduction about `GaMPEN`**. 
+
+Once the environment is set up,  please make sure you have the following directory structure under the `GaMPEN/` folder:
+```bash
+PSFGAN-GaMPEN/
+├── PSFGAN
+└── GaMPEN
+    ├── docs
+    ├── ggt
+        ├── __pycache__
+        ├── data
+            ├── gal_real_0_0.25_gmp
+            ├── gal_real_0.25_0.5_gmp
+            ├── gal_real_0.5_0.9_gmp
+            ├── gal_real_0.9_1.1_gmp
+            ├── gal_real_1.1_1.4_gmp
+            ├── {target dataset name}
+                ├── cutouts
+                └── info.csv
+            └── {other files and folders}
+        ├── losses
+        ├── metrics
+        ├── models
+        ├── modules
+        ├── tests
+        ├── train
+        ├── utils
+        ├── visualization
+        └── __init__.py
+    ├── ggt.egg-info
+    ├── mlruns
+    ├── intro_image.png
+    ├── LICENSE
+    ├── Makefile
+    ├── README.rst
+    ├── requirements.txt
+    └── setup.py
+```
+
+Here, folders such as `gal_real_0_0.25_gmp` contains scaling files. **These five folders are not there by default and users need to manually download them from the `Scaling Files` folder in this [Google Drive](https://drive.google.com/drive/folders/1cSxARao_UVPG9RlhYYjp-LvRQOWgA3DB?usp=sharing) and put them exactly under `PSFGAN-GaMPEN/GaMPEN/ggt/data/`**. They contains information about inverse transformations (to be processed by `GaMPEN` models) and are therefore **indispensable for the inference and result aggregation steps**.
+
+In addition, please copy all images from the `PSFGAN` output (`PSFGAN-GaMPEN/PSFGAN/{target dataset name}/{the corresponding filter} band/{stretch_type}_{scale_factor}/lintrain_classic_PSFGAN_{attention_parameter}/lr_{learning_rate}/PSFGAN_output/epoch_{test_epoch}/fits_output/`) to the `PSFGAN-GaMPEN/GaMPEN/ggt/data/{target dataset name}/cutouts/` folder. Please also copy the catalog file (`PSFGAN-GaMPEN/PSFGAN/{target dataset name}/{the corresponding filter}-band/{stretch_type}_{scale_factor}/npy_input/catalog_test_npy_input.csv`) to `PSFGAN-GaMPEN/GaMPEN/ggt/data/{target dataset name}/` and **rename it as info.csv**. Of course, if you have data from multiple redshift bins, there should be multiple `{target dataset name}`s as well. Here we assume we only have `g-band` data from the `low` redshift bin.
 #### Inference
 #### Result Aggregation
 
