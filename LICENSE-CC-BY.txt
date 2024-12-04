@@ -394,4 +394,3 @@ public licenses.
 
 Creative Commons may be contacted at creativecommons.org.
 
-PSFGAN-GaMPEN © 2024 by Chuan Tian is licensed under Creative Commons Attribution 4.0 International 
