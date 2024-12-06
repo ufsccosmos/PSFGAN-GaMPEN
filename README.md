@@ -34,7 +34,7 @@ In this section, we will present a quick guide so readers can learn how to effec
 ### Introduction
 This guide will allow readers to apply our trained models of `PSFGAN-GaMPEN` on real AGNs in the HSC Wide Survey for an estimation of host galaxy magnitude/flux, effective radius and bulge-to-total flux ratio.
 
-As illustrated in the paper, in each of the following five redshift bins, we trained an individual model of `PSFGAN` and an individual model of `GaMorNet`:
+As illustrated in the paper, in each of the following five redshift bins, we trained an individual model of `PSFGAN` and an individual model of `GaMPEN`:
 ```bash
 Low redshift bin (0 < z < 0.25)
     └── PSFGAN for g-band
