@@ -3,9 +3,7 @@
 # PSFGAN-GaMPEN
 This repository contains source code for the `PSFGAN-GaMPEN` framework (discussed in "Automatic Machine Learning Framework to Study Morphological Parameters of AGN Host Galaxies within $z<1.4$ in the Hyper Supreme-Cam Wide Survey").
 
-[Published Paper](https://doi.org/10.3847/1538-4357/adaec0)
-
-[Arxiv Pre-print](https://arxiv.org/abs/2501.15739)
+Links to [published paper](https://doi.org/10.3847/1538-4357/adaec0) and [arXiv pre-print](https://arxiv.org/abs/2501.15739).
 ## CONTENTS
 ```bash
 PSFGAN-GaMPEN
