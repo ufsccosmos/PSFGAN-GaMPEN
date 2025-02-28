@@ -1,4 +1,5 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14273617.svg)](https://doi.org/10.5281/zenodo.14273617)
+[![DOI](https://iopscience.iop.org/article/10.3847/1538-4357/adaec0)](https://doi.org/10.3847/1538-4357/adaec0)
 
 # PSFGAN-GaMPEN
 This repository contains source code for the `PSFGAN-GaMPEN` framework (discussed in "Automatic Machine Learning Framework to Study Morphological Parameters of AGN Host Galaxies within $z<1.4$ in the Hyper Supreme-Cam Wide Survey").
